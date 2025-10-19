@@ -95,6 +95,7 @@ if __name__ == '__main__':
             batch_x4_lable_2 = torch.full((BATCH_SIZE,), 4, dtype=torch.long).to(device)
 
             similarity = torch.cosine_similarity(w_g, w_t, dim=0)
+            similarity = torch.abs_(similarity)
 
             loss_x4 = F.cross_entropy(out_x4, batch_x4_lable) + F.cross_entropy(out_x4, batch_x4_lable_2)
             loss_single = F.cross_entropy(out_single, single_lable)
@@ -118,4 +119,5 @@ if __name__ == '__main__':
 
         if (epoch % 100 == 0):
             torch.save(MPCL.state_dict(), '../Model_MPCL/%d.pkl' % (epoch))
+
         scheduler.step()
